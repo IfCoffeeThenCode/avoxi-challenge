@@ -16,3 +16,6 @@
 
 # Output binary
 avoxi-challenge
+
+# generated files
+*_enumer.go

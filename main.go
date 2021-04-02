@@ -16,7 +16,7 @@ func main() {
 
 	geoClient := geolite2.NewClient(accountID, licenseKey)
 
-	myLocation, err := geoClient.Get("me")
+	myLocation, err := geoClient.GetCountry("me")
 	if err != nil {
 		logger.Fatal().
 			Err(err).

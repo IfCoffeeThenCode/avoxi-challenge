@@ -19,3 +19,6 @@ avoxi-challenge
 
 # generated files
 *_enumer.go
+
+# local creds
+env_file

@@ -8,30 +8,21 @@ import (
 )
 
 func main() {
-	myLocation := geolite2.Response{
-		City: &geolite2.City{
-			Names: map[string]string{
-				"en": "Atlanta",
-				"ru": "Атланта",
-			},
-		},
-		Country: &geolite2.Country{
-			ISOCode: "US",
-			Names: map[string]string{
-				"en": "United States",
-				"ru": "США",
-			},
-		},
-		Continent: &geolite2.Continent{
-			Code: geolite2.NA,
-			Names: map[string]string{
-				"en": "North America",
-				"ru": "Северная Америка",
-			},
-		},
+	logger := zerolog.New(os.Stdout).With().Timestamp().Logger()
+	zerolog.SetGlobalLevel(zerolog.TraceLevel)
+
+	accountID := os.Getenv("ACCOUNT_ID")
+	licenseKey := os.Getenv("LICENSE_KEY")
+
+	geoClient := geolite2.NewClient(accountID, licenseKey)
+
+	myLocation, err := geoClient.Get("me")
+	if err != nil {
+		logger.Fatal().
+			Err(err).
+			Msg("could not obtain my IP address")
 	}
 
-	logger := zerolog.New(os.Stdout).With().Timestamp().Logger()
 	logger.Info().
 		Str("Author", "Ben Durbin").
 		Interface("location", myLocation).

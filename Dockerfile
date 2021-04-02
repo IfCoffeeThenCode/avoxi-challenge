@@ -4,6 +4,9 @@ WORKDIR /go/src/app
 
 RUN go get github.com/IfCoffeeThenCode/enumer@1.1.5
 
+ENV ACCOUNT_ID="nope"
+ENV LICENSE_KEY="not bloody likely"
+
 COPY . .
 
 RUN go get -d -v ./...

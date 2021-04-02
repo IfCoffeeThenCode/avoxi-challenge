@@ -35,11 +35,19 @@ func (ca *clientActual) Get(ipAddress string) (*Response, error) {
 	}
 	geoipURL.Path = path.Join("geoip/v2.1/country", ipAddress)
 
-	// Perform request
-	// TODO: add headers for auth
-	response, err := ca.client.Get(geoipURL.String())
+	// Create request
+	request, err := http.NewRequest(http.MethodGet, geoipURL.String(), nil)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed request")
+		return nil, errors.Wrap(err, "failed to create request")
+	}
+
+	// Authenticate request
+	request.SetBasicAuth(ca.accountID, ca.licenseKey)
+
+	// Perform request
+	response, err := ca.client.Do(request)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to perform request")
 	}
 	defer response.Body.Close()
 

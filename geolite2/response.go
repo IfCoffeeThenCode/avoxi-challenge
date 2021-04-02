@@ -27,25 +27,10 @@ type City struct {
 
 // Continent holds the responce continent data
 type Continent struct {
-	Code      continentCode     `json:"code"`
+	Code      string            `json:"code"`
 	GeoNameID int               `json:"geoname_id"`
 	Names     map[string]string `json:"names"`
 }
-
-//go:generate enumer -type=continentCode -json -transform=macro -trimprefix=continentCode
-type continentCode int
-
-// Unfortunately Go does not have sum types (enums) like Rust or F#, but there
-// are tools like `enumer` that somewhat fill the gap for this use case.
-const (
-	AF continentCode = iota // Africa
-	AN                      // Antarctica
-	AS                      // Asia
-	EU                      // Europe
-	NA                      // North America
-	OC                      // Oceania
-	SA                      // South America
-)
 
 // Country holds the data we are really looking for
 type Country struct {

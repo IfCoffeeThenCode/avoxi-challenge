@@ -4,11 +4,12 @@ import (
 	"os"
 
 	"github.com/IfCoffeeThenCode/avoxi-challenge/geolite2"
+	"github.com/IfCoffeeThenCode/avoxi-challenge/handler"
+	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
 )
 
 func main() {
-	logger := zerolog.New(os.Stdout).With().Timestamp().Logger()
 	zerolog.SetGlobalLevel(zerolog.TraceLevel)
 
 	accountID := os.Getenv("ACCOUNT_ID")
@@ -16,15 +17,10 @@ func main() {
 
 	geoClient := geolite2.NewClient(accountID, licenseKey)
 
-	myLocation, err := geoClient.GetCountry("me")
-	if err != nil {
-		logger.Fatal().
-			Err(err).
-			Msg("could not obtain my IP address")
-	}
+	handler := handler.NewHandler(geoClient)
 
-	logger.Info().
-		Str("Author", "Ben Durbin").
-		Interface("location", myLocation).
-		Msg("Hello AVOXI")
+	router := gin.Default()
+	router.GET("/whitelist", handler.CheckIP)
+
+	router.Run(os.Getenv("GEO_HOST_PORT"))
 }

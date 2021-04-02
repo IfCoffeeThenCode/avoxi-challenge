@@ -4,6 +4,7 @@ WORKDIR /go/src/app
 
 ENV ACCOUNT_ID="nope"
 ENV LICENSE_KEY="not bloody likely"
+ENV GEO_HOST_PORT=:8080
 
 COPY . .
 

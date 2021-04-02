@@ -2,7 +2,6 @@
 Package geolite2 provides access to the https://dev.maxmind.com/geoip/geoip2/web-services/
 IP location mapping service
 */
-
 package geolite2
 
 // Response is the top-level structure for an API response
@@ -72,5 +71,5 @@ type RepresentedCountry struct {
 	InEuropeanUnion bool              `json:"is_in_european_union"`
 	ISOCode         string            `json:"iso_code"`
 	Names           map[string]string `json:"names"`
-	Type            string            `json:"tyge"`
+	Type            string            `json:"type"`
 }

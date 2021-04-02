@@ -31,7 +31,7 @@ func (ca *clientActual) Get(ipAddress string) (*Response, error) {
 	// Create request URL
 	geoipURL := &url.URL{
 		Scheme: "https",
-		Host:   "geoip.maxmind.com",
+		Host:   "geolite.info",
 	}
 	geoipURL.Path = path.Join("geoip/v2.1/country", ipAddress)
 
